@@ -1,9 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import Analytic from "./Analytic";
 import About from "./About";
 const Home = () => <h2>Home</h2>;
+
+function NoMatch({ location }) {
+  return (
+    <div>
+      <h3>
+        No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  );
+}
 
 const AppRouter = () => (
   <Router>
@@ -21,19 +31,21 @@ const AppRouter = () => (
           </li>
         </ul>
       </nav>
-
-      <Route path="/" exact component={Home} />
-      <Route path="/analytic/" component={Analytic} />
-      <Route
-        path="/about/"
-        render={routeProps => (
-          <About
-            {...routeProps}
-            applicationName="Azure DevOps Analytics"
-            author="Gilles Lautrou"
-          />
-        )}
-      />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/analytic/" component={Analytic} />
+        <Route
+          path="/about/"
+          render={routeProps => (
+            <About
+              {...routeProps}
+              applicationName="Azure DevOps Analytics"
+              author="Gilles Lautrou"
+            />
+          )}
+        />
+        <Route component={NoMatch} />
+      </Switch>
     </div>
   </Router>
 );
