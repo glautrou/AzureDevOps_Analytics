@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 import "./App.css";
+import AppRouter from "../AppRouter.js";
 import About from "../About";
 
 // function test(x: ?number): string {
@@ -36,6 +37,7 @@ class App extends Component<Props> {
           applicationName="Azure DevOps Analytics"
           author="Gilles Lautrou"
         />
+        <AppRouter />
       </div>
     );
   }

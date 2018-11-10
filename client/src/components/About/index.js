@@ -12,6 +12,8 @@ import Grid from "@material-ui/core/Grid";
 
 type Props = { applicationName: string, author: string };
 
+//const About = () => <h2>About</h2>;
+
 function About(props: Props) {
   return (
     <Grid container spacing={24}>
