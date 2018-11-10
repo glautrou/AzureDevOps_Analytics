@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 import "./App.css";
+import About from "../About";
 
 // function test(x: ?number): string {
 //   if (x) {
@@ -31,6 +32,10 @@ class App extends Component<Props> {
             Learn React
           </a>
         </header>
+        <About
+          applicationName="Azure DevOps Analytics"
+          author="Gilles Lautrou"
+        />
       </div>
     );
   }
