@@ -1,8 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-import Analytic from "./Analytic";
-import About from "./About";
+import Header from "./Header.js";
+
+import Analytic from "../Analytic";
+import About from "../About";
 const Home = () => <h2>Home</h2>;
 
 function NoMatch({ location }) {
@@ -18,6 +20,7 @@ function NoMatch({ location }) {
 const AppRouter = () => (
   <Router>
     <div>
+      <Header />
       <nav>
         <ul>
           <li>
