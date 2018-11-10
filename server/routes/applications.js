@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET applications listing. */
 router.get("/", function(req, res, next) {
-  res.json([{ name: "Application 1" }, { name: "Applicztion 2" }]);
+  res.json([
+    { id: "1", name: "Application 1" },
+    { id: "2", name: "Applicztion 2" }
+  ]);
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 
-import Analytic from "../Analytic";
+import Analytic from "../Analytic/Applications.js";
 import About from "../About";
 const Home = () => <h2>Home</h2>;
 
