@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import Header from "./Header.js";
+import Footer from "./Footer.js";
 
 import Analytic from "../Analytic";
 import About from "../About";
@@ -49,6 +50,7 @@ const AppRouter = () => (
         />
         <Route component={NoMatch} />
       </Switch>
+      <Footer />
     </div>
   </Router>
 );
