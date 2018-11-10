@@ -1,8 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// @flow
 
-class App extends Component {
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+// function test(x: ?number): string {
+//   if (x) {
+//     return x;
+//   }
+//   return "default string";
+// }
+
+type Props = {};
+
+class App extends Component<Props> {
   render() {
     return (
       <div className="App">
