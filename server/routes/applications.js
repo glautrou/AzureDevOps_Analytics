@@ -1,13 +1,9 @@
 var express = require("express");
 var router = express.Router();
 
+/* GET applications listing. */
 router.get("/", function(req, res, next) {
-  res.json([{ name: "Application 1" }, { name: "Application 2" }]);
-});
-
-router.get("/:applicationId", function(req, res, next) {
-  var id = req.params.applicationId;
-  res.json({ name: `Application {id}` });
+  res.send("respond with a resource");
 });
 
 module.exports = router;
