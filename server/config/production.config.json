@@ -1,0 +1,8 @@
+{
+  "env": "production",
+  "sonar": {
+    "url": "[#SONAR_URL#]",
+    "username": "[#SONAR_USERNAME#]",
+    "password": "[#SONAR_PASSWORD#]"
+  }
+}
