@@ -43,34 +43,37 @@ router.get("/builds/:projectCode", async (req, res, next) => {
           }, Queue status: ${def.queueStatus}`
         );
         let latestBuild = await build.getLatestBuild(project, def.id);
-        let status =
-          latestBuild.status === 1
-            ? "In progress"
-            : latestBuild.status === 2
-            ? "Completed"
-            : "-";
-        let buildResult =
-          latestBuild.result === 2
-            ? "Succeeded"
-            : latestBuild.result === 4
-            ? "PartiallySucceeded"
-            : latestBuild.result === 8
-            ? "Failed"
-            : latestBuild.result === 32
-            ? "Canceled"
-            : "-";
-        console.log(
-          `=> Status: ${status}, Result: ${buildResult}, Finish: ${
-            latestBuild.finishTime
-          }`
-        );
+        if (latestBuild) {
+          let status =
+            latestBuild.status === 1
+              ? "In progress"
+              : latestBuild.status === 2
+              ? "Completed"
+              : "-";
+          let buildResult =
+            latestBuild.result === 2
+              ? "Succeeded"
+              : latestBuild.result === 4
+              ? "PartiallySucceeded"
+              : latestBuild.result === 8
+              ? "Failed"
+              : latestBuild.result === 32
+              ? "Canceled"
+              : "-";
+          console.log(
+            `=> Status: ${status}, Result: ${buildResult}, Finish: ${
+              latestBuild.finishTime
+            }`
+          );
+        }
+
         result.builds.push({
           id: def.id,
           name: def.name,
           type: def.type,
-          status: latestBuild.status,
-          result: latestBuild.result,
-          finishTime: latestBuild.finishTime
+          status: latestBuild ? latestBuild.status : null,
+          result: latestBuild ? latestBuild.result : null,
+          finishTime: latestBuild ? latestBuild.finishTime : null
         });
       })
     );

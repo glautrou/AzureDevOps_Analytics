@@ -35,7 +35,7 @@ class Analytic extends Component {
           <Application
             key={application.id}
             id={application.id}
-            name={application.code}
+            code={application.code}
           />
         ))}
       </ul>
