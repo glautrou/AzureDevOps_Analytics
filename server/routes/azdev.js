@@ -85,6 +85,47 @@ router.get("/builds/:projectCode", async (req, res, next) => {
   }
 });
 
+/* GET project releases */
+router.get("/releases/:projectCode", async (req, res, next) => {
+  try {
+    const project = req.params.projectCode;
+    const connection = getAzdevConnection();
+    const api = await connection.getReleaseApi();
+    // const defs = await api.getde(project);
+    // console.log("getDefinitions");
+    // console.log(defs);
+    const getDeployments = await api.getDeployments(project);
+    // const getDefinitionEnvironments = await api.getDefinitionEnvironments(
+    //   project
+    // );
+    const getDeploymentsForMultipleEnvironments = await api.getDeploymentsForMultipleEnvironments(
+      project
+    );
+    const getReleases = await api.getReleases(project);
+    //const getLatestBuild = await api.getLatestBuild(project);
+    const getReleaseDefinitions = await api.getReleaseDefinitions(project);
+
+    const result = {
+      project,
+      getDeployments,
+      //getDefinitionEnvironments
+      getDeploymentsForMultipleEnvironments,
+      getReleases,
+      getReleaseDefinitions
+      //getLatestBuild
+    };
+
+    const releases = getReleaseDefinitions.map(release => {
+      return { id: release.id, name: release.name };
+    });
+
+    res.json(releases);
+  } catch (e) {
+    //this will eventually be handled by your error handling middleware
+    next(e);
+  }
+});
+
 // Get Azure DevOps API connection
 function getAzdevConnection() {
   const orgUrl = config.get("azdev.url");
