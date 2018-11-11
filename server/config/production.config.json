@@ -11,5 +11,9 @@
     "url": "[#SONAR_URL#]",
     "username": "[#SONAR_USERNAME#]",
     "password": "[#SONAR_PASSWORD#]"
+  },
+  "azdev": {
+    "url": "[#AZDEV_URL#]",
+    "token": "[#AZDEV_TOKEN#]"
   }
 }

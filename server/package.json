@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "azure-devops-node-api": "^7.0.0",
     "convict": "^4.4.0",
     "cookie-parser": "~1.4.3",
     "debug": "~4.1.0",

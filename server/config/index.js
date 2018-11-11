@@ -24,6 +24,19 @@ var config = convict({
       default: "",
       sensitive: true
     }
+  },
+  azdev: {
+    url: {
+      doc: "Azure DevOps base URL",
+      format: "url",
+      default: ""
+    },
+    token: {
+      doc: "Azure DevOps API token",
+      format: String,
+      default: "",
+      sensitive: true
+    }
   }
 });
 
