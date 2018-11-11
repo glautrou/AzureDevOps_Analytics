@@ -1,3 +1,10 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// WARNING: This file is commited!
+// Only use it to store:
+// - Continuous Delivery arguments
+// - Non-sensitive data
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 {
   "env": "production",
   "sonar": {
