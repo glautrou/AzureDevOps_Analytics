@@ -13,9 +13,7 @@ function Application(props: Props) {
   return (
     <Card>
       <CardContent>
-        <Typography>
-          {props.id}: {props.name}
-        </Typography>
+        <Typography>{props.name}</Typography>
       </CardContent>
       {/* <CardActions>
         <Button size="small">Learn More</Button>

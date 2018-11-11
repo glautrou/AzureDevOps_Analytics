@@ -11,7 +11,7 @@ class Analytic extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     try {
-      const response = await fetch("/applications");
+      const response = await fetch("/azdev/projects");
       const json = await response.json();
       this.setState({ applications: json, isLoading: false });
     } catch (error) {
@@ -35,7 +35,7 @@ class Analytic extends Component {
           <Application
             key={application.id}
             id={application.id}
-            name={application.name}
+            name={application.code}
           />
         ))}
       </ul>

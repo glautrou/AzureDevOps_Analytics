@@ -13,7 +13,7 @@ router.get("/projects", async (req, res, next) => {
     const api = await connection.getCoreApi();
     const projects = await api.getProjects();
     const result = projects.map(project => {
-      return { code: project.name };
+      return { id: project.id, code: project.name };
     });
     res.json(result);
   } catch (e) {
