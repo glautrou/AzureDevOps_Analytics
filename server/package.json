@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "convict": "^4.4.0",
     "cookie-parser": "~1.4.3",
     "debug": "~4.1.0",
     "express": "~4.16.0",
