@@ -91,35 +91,70 @@ router.get("/releases/:projectCode", async (req, res, next) => {
     const project = req.params.projectCode;
     const connection = getAzdevConnection();
     const api = await connection.getReleaseApi();
-    // const defs = await api.getde(project);
-    // console.log("getDefinitions");
-    // console.log(defs);
+
     const getDeployments = await api.getDeployments(project);
     // const getDefinitionEnvironments = await api.getDefinitionEnvironments(
+    //   project,
+    //   "1",
+    //   []
+    // );
+    // const getDeploymentsForMultipleEnvironments = await api.getDeploymentsForMultipleEnvironments(
     //   project
     // );
-    const getDeploymentsForMultipleEnvironments = await api.getDeploymentsForMultipleEnvironments(
-      project
-    );
-    const getReleases = await api.getReleases(project);
+    // const getReleases = await api.getReleases(project);
     //const getLatestBuild = await api.getLatestBuild(project);
     const getReleaseDefinitions = await api.getReleaseDefinitions(project);
 
-    const result = {
-      project,
-      getDeployments,
-      //getDefinitionEnvironments
-      getDeploymentsForMultipleEnvironments,
-      getReleases,
-      getReleaseDefinitions
-      //getLatestBuild
-    };
+    // const result2 = {
+    //   project,
+    //   //getDefinitionEnvironments,
+    //   getDeployments,
+    //   //getDefinitionEnvironments
+    //   getDeploymentsForMultipleEnvironments,
+    //   getReleases,
+    //   getReleaseDefinitions
+    //   //getLatestBuild
+    // };
 
     const releases = getReleaseDefinitions.map(release => {
       return { id: release.id, name: release.name };
     });
 
-    res.json(releases);
+    let result = {
+      project,
+      releases: []
+    };
+
+    getReleaseDefinitions.forEach(releaseDefinition => {
+      var environmentNames = [];
+      let release = {
+        name: releaseDefinition.name,
+        environments: []
+      };
+      let env = getDeployments.map(deployment => {
+        if (!environmentNames.includes(deployment.releaseEnvironment.name)) {
+          environmentNames.push(deployment.releaseEnvironment.name);
+        }
+        return {
+          name: deployment.releaseEnvironment.name,
+          release: deployment.release.name,
+          version:
+            deployment.release.artifacts[0].definitionReference.version.name,
+          deploymentStatus: deployment.deploymentStatus, //1:NotDeployed, 2:InProgress, 4:Succeeded, 8:PartiallySucceeded, 16:Failed
+          completedOn: deployment.completedOn
+        };
+      });
+
+      environmentNames.forEach(environmentName => {
+        release.environments.push(
+          env.filter(i => i.name == environmentName)[0]
+        );
+      });
+
+      result.releases.push(release);
+    });
+
+    res.json(result);
   } catch (e) {
     //this will eventually be handled by your error handling middleware
     next(e);
