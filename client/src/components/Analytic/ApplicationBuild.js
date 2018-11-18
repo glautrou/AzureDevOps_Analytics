@@ -170,7 +170,8 @@ const styles = {
     color: "pink"
   },
   card: {
-    border: "1px solid gray"
+    border: "1px solid gray",
+    textAlign: "center"
   },
   title: {
     fontSize: 14
