@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Application from "./Application.js";
+import arraySort from "array-sort";
 
 class Analytic extends Component {
   state = {
@@ -13,6 +14,7 @@ class Analytic extends Component {
     try {
       const response = await fetch("/azdev/projects");
       const json = await response.json();
+      arraySort(json, "code");
       this.setState({ applications: json, isLoading: false });
     } catch (error) {
       this.setState({

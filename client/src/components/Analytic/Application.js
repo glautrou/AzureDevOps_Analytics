@@ -2,6 +2,9 @@
 
 import React, { Component } from "react";
 import ApplicationBuild from "./ApplicationBuild";
+
+import arraySort from "array-sort";
+
 import Card from "@material-ui/core/Card";
 // import CardActions from '@material-ui/core/CardActions';
 import CardContent from "@material-ui/core/CardContent";
@@ -37,6 +40,7 @@ class Application extends Component<Props, State> {
     try {
       const response = await fetch(`/azdev/builds/${this.props.code}`);
       const json = await response.json();
+      arraySort(json.builds, "name");
       this.setState({ builds: json.builds, isLoading: false });
     } catch (error) {
       this.setState({
