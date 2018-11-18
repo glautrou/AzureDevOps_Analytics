@@ -14,6 +14,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import { withStyles } from "@material-ui/core/styles";
+
 type Props = { id: number, code: string };
 type State = {
   builds?: ?({
@@ -130,6 +134,7 @@ class Application extends Component<Props, State> {
         <div>
           <b>{this.props.code}</b>
         </div>
+
         {this.state.error && <div>Error: {this.state.error}</div>}
 
         {this.state.isLoading && (
@@ -138,21 +143,42 @@ class Application extends Component<Props, State> {
           </div>
         )}
 
-        {!this.state.isLoading &&
-          !this.state.error &&
-          this.state.builds &&
-          this.state.builds.map(build => (
-            <ApplicationBuild
-              key={build.id}
-              name={build.name}
-              status={build.status}
-              result={build.result}
-              finishTime={build.finishTime}
-            />
-          ))}
+        {!this.state.isLoading && !this.state.error && this.state.builds && (
+          <div className={this.props.root}>
+            <GridList cellHeight={160} className={this.props.gridList} cols={2}>
+              {this.state.builds.map(build => (
+                <GridListTile key={build.id} cols={1}>
+                  <ApplicationBuild
+                    name={build.name}
+                    status={build.status}
+                    result={build.result}
+                    finishTime={build.finishTime}
+                  />
+                </GridListTile>
+              ))}
+            </GridList>
+          </div>
+        )}
       </div>
     );
   }
 }
 
-export default Application;
+const styles = theme => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper
+  },
+  gridList: {
+    width: 500,
+    height: 450
+  },
+  subheader: {
+    width: "100%"
+  }
+});
+
+export default withStyles(styles)(Application);

@@ -13,6 +13,7 @@ import Cancel from "@material-ui/icons/Cancel";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -132,10 +133,9 @@ function getTemplate(props: Props, status: string, icon: any) {
           {props.name}
         </Typography>
         <Typography variant="h5" component="h2">
-          {icon}
-          {status}
+          <Tooltip title={status}>{icon}</Tooltip>
         </Typography>
-        <Typography className={props.classes.pos} color="textSecondary">
+        <Typography className={props.classes.date} color="textSecondary">
           <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment> (
           <Moment fromNow>{props.finishTime}</Moment>)
         </Typography>
@@ -170,14 +170,12 @@ const styles = {
     color: "pink"
   },
   card: {
-    minWidth: 275
+    border: "1px solid gray"
   },
   title: {
     fontSize: 14
   },
-  pos: {
-    marginBottom: 12
-  }
+  date: {}
 };
 
 export default withStyles(styles)(ApplicationBuild);
