@@ -1,22 +1,23 @@
 // @flow
 
-import React, { Component } from "react";
-import ApplicationBuild from "./ApplicationBuild";
+import React, { Component } from 'react';
+import ApplicationBuild from './ApplicationBuild';
+import ApplicationSonar from './ApplicationSonar';
 
-import arraySort from "array-sort";
+import arraySort from 'array-sort';
 
-import Card from "@material-ui/core/Card";
+import Card from '@material-ui/core/Card';
 // import CardActions from '@material-ui/core/CardActions';
-import CardContent from "@material-ui/core/CardContent";
+import CardContent from '@material-ui/core/CardContent';
 // import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ThumbDown from "@material-ui/icons/ThumbDown";
-import ThumbUp from "@material-ui/icons/ThumbUp";
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ThumbDown from '@material-ui/icons/ThumbDown';
+import ThumbUp from '@material-ui/icons/ThumbUp';
 
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import { withStyles } from "@material-ui/core/styles";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import { withStyles } from '@material-ui/core/styles';
 
 type Props = { id: number, code: string };
 type State = {
@@ -35,6 +36,7 @@ type State = {
 class Application extends Component<Props, State> {
   state = {
     builds: null,
+    sonar: null,
     isLoading: true,
     error: null
   };
@@ -44,9 +46,22 @@ class Application extends Component<Props, State> {
     try {
       const response = await fetch(`/azdev/builds/${this.props.code}`);
       const json = await response.json();
-      arraySort(json.builds, "name");
-      this.setState({ builds: json.builds, isLoading: false });
+      arraySort(json.builds, 'name');
+
+      //Sonar
+      let sonarJson = null;
+      const sonarResponse = await fetch(`/sonar/summary/${this.props.code}`);
+      if (sonarResponse.status === 200) {
+        sonarJson = await sonarResponse.json();
+      }
+
+      this.setState({
+        builds: json.builds,
+        sonar: sonarJson,
+        isLoading: false
+      });
     } catch (error) {
+      console.log(error);
       this.setState({
         error,
         isLoading: false
@@ -62,7 +77,7 @@ class Application extends Component<Props, State> {
     switch (build.status) {
       case 1:
         //In progress
-        return "blue";
+        return 'blue';
         break;
       case 2:
         //Completed
@@ -70,26 +85,26 @@ class Application extends Component<Props, State> {
         switch (build.result) {
           case 2:
             //Succeeded
-            return "green";
+            return 'green';
             break;
           case 4:
             //PartiallySucceeded
-            return "orange";
+            return 'orange';
             break;
           case 8:
             //Failed
-            return "red";
+            return 'red';
             break;
           case 32:
             //Canceled
-            return "gray";
+            return 'gray';
             break;
           default:
-            return "gray";
+            return 'gray';
         }
         break;
       default:
-        return "gray";
+        return 'gray';
     }
   };
 
@@ -97,7 +112,7 @@ class Application extends Component<Props, State> {
     switch (build.status) {
       case 1:
         //In progress
-        return "blue";
+        return 'blue';
         break;
       case 2:
         //Completed
@@ -105,26 +120,26 @@ class Application extends Component<Props, State> {
         switch (build.result) {
           case 2:
             //Succeeded
-            return "green";
+            return 'green';
             break;
           case 4:
             //PartiallySucceeded
-            return "orange";
+            return 'orange';
             break;
           case 8:
             //Failed
-            return "red";
+            return 'red';
             break;
           case 32:
             //Canceled
-            return "gray";
+            return 'gray';
             break;
           default:
-            return "gray";
+            return 'gray';
         }
         break;
       default:
-        return "gray";
+        return 'gray';
     }
   };
 
@@ -157,6 +172,8 @@ class Application extends Component<Props, State> {
                 </GridListTile>
               ))}
             </GridList>
+
+            {this.state.sonar && <ApplicationSonar {...this.state.sonar} />}
           </div>
         )}
       </div>
@@ -166,10 +183,10 @@ class Application extends Component<Props, State> {
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
     backgroundColor: theme.palette.background.paper
   },
   gridList: {
@@ -177,7 +194,7 @@ const styles = theme => ({
     height: 450
   },
   subheader: {
-    width: "100%"
+    width: '100%'
   }
 });
 
