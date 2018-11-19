@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 import ApplicationBuild from "./ApplicationBuild";
+import ApplicationRelease from "./ApplicationRelease";
 
 import arraySort from "array-sort";
 
@@ -35,6 +36,7 @@ type State = {
 class Application extends Component<Props, State> {
   state = {
     builds: null,
+    releases: null,
     isLoading: true,
     error: null
   };
@@ -42,10 +44,21 @@ class Application extends Component<Props, State> {
   async componentDidMount() {
     this.setState({ isLoading: true });
     try {
-      const response = await fetch(`/azdev/builds/${this.props.code}`);
-      const json = await response.json();
-      arraySort(json.builds, "name");
-      this.setState({ builds: json.builds, isLoading: false });
+      const responseBuilds = await fetch(`/azdev/builds/${this.props.code}`);
+      const jsonBuilds = await responseBuilds.json();
+      arraySort(jsonBuilds.builds, "name");
+
+      //releases
+      const responseReleases = await fetch(
+        `/azdev/releases/${this.props.code}`
+      );
+      const jsonReleases = await responseReleases.json();
+      //console.log(jsonReleases.releases);
+      this.setState({
+        builds: jsonBuilds.builds,
+        releases: jsonReleases.releases,
+        isLoading: false
+      });
     } catch (error) {
       this.setState({
         error,
@@ -153,6 +166,21 @@ class Application extends Component<Props, State> {
                     status={build.status}
                     result={build.result}
                     finishTime={build.finishTime}
+                  />
+                </GridListTile>
+              ))}
+            </GridList>
+          </div>
+        )}
+
+        {!this.state.isLoading && !this.state.error && this.state.releases && (
+          <div className={this.props.root}>
+            <GridList cellHeight={160} className={this.props.gridList} cols={2}>
+              {this.state.releases.map(release => (
+                <GridListTile key={release.name} cols={1}>
+                  <ApplicationRelease
+                    name={release.name}
+                    environments={release.environments}
                   />
                 </GridListTile>
               ))}

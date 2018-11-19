@@ -140,8 +140,8 @@ router.get("/releases/:projectCode", async (req, res, next) => {
           release: deployment.release.name,
           version:
             deployment.release.artifacts[0].definitionReference.version.name,
-          deploymentStatus: deployment.deploymentStatus, //1:NotDeployed, 2:InProgress, 4:Succeeded, 8:PartiallySucceeded, 16:Failed
-          completedOn: deployment.completedOn
+          status: deployment.deploymentStatus, //1:NotDeployed, 2:InProgress, 4:Succeeded, 8:PartiallySucceeded, 16:Failed
+          finishTime: deployment.completedOn
         };
       });
 
