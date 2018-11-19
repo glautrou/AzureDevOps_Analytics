@@ -33,7 +33,6 @@ type Props = {
 };
 
 function ApplicationReleaseEnvironment(props: Props) {
-  console.log(props);
   return (
     <div>
       {props.status === 1 &&

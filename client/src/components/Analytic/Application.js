@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import ApplicationBuild from "./ApplicationBuild";
 import ApplicationRelease from "./ApplicationRelease";
+import ApplicationSonar from "./ApplicationSonar";
 
 import arraySort from "array-sort";
 
@@ -37,6 +38,7 @@ class Application extends Component<Props, State> {
   state = {
     builds: null,
     releases: null,
+    sonar: null,
     isLoading: true,
     error: null
   };
@@ -44,6 +46,7 @@ class Application extends Component<Props, State> {
   async componentDidMount() {
     this.setState({ isLoading: true });
     try {
+      //builds
       const responseBuilds = await fetch(`/azdev/builds/${this.props.code}`);
       const jsonBuilds = await responseBuilds.json();
       arraySort(jsonBuilds.builds, "name");
@@ -53,13 +56,22 @@ class Application extends Component<Props, State> {
         `/azdev/releases/${this.props.code}`
       );
       const jsonReleases = await responseReleases.json();
-      //console.log(jsonReleases.releases);
+
+      //Sonar
+      let sonarJson = null;
+      const sonarResponse = await fetch(`/sonar/summary/${this.props.code}`);
+      if (sonarResponse.status === 200) {
+        sonarJson = await sonarResponse.json();
+      }
+
       this.setState({
         builds: jsonBuilds.builds,
         releases: jsonReleases.releases,
+        sonar: sonarJson,
         isLoading: false
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         error,
         isLoading: false
@@ -170,6 +182,8 @@ class Application extends Component<Props, State> {
                 </GridListTile>
               ))}
             </GridList>
+
+            {this.state.sonar && <ApplicationSonar {...this.state.sonar} />}
           </div>
         )}
 
