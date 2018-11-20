@@ -5,6 +5,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames/bind';
 
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import ThumbDown from '@material-ui/icons/ThumbDown';
+import BugReport from '@material-ui/icons/BugReport';
+import ReportProblem from '@material-ui/icons/ReportProblem';
+import HourglassFull from '@material-ui/icons/HourglassFull';
+import Block from '@material-ui/icons/Block';
+import Cancel from '@material-ui/icons/Cancel';
+
 type Props = {
   qualityGate: string,
   issues: {
@@ -17,54 +27,91 @@ type Props = {
   classes: ?any
 };
 
+function getTemplate(props: Props, status: string, icon: any) {
+  return (
+    <Typography variant="h5" component="h2" className={props.classes.state}>
+      <Tooltip title={status}>{icon}</Tooltip>
+    </Typography>
+  );
+}
+
 function ApplicationSonar(props: Props) {
-  let gateClass = null;
+  let image = '';
   switch (props.qualityGate) {
     case 'OK':
-      gateClass = props.classes.gateOk;
+      image = getTemplate(
+        props,
+        'OK',
+        <ThumbUp
+          className={classNames(props.classes.state, props.classes.stateOk)}
+        />
+      );
       break;
     case 'WARN':
-      gateClass = props.classes.gateWarn;
+      image = getTemplate(
+        props,
+        'WARN',
+        <ReportProblem
+          className={classNames(props.classes.state, props.classes.stateWarn)}
+        />
+      );
       break;
     case 'ERROR':
-      gateClass = props.classes.gateError;
+      image = getTemplate(
+        props,
+        'ERROR',
+        <ThumbDown
+          className={classNames(props.classes.state, props.classes.stateError)}
+        />
+      );
       break;
     case 'NONE':
-      gateClass = props.classes.gateNone;
+      image = getTemplate(
+        props,
+        'NONE',
+        <Block
+          className={classNames(props.classes.state, props.classes.stateNone)}
+        />
+      );
       break;
   }
   return (
-    <div className={classNames(props.classes.root, gateClass)}>
+    <div className={props.classes.root}>
       <Grid container>
         <Grid item xs={6}>
-          Blocker :
+          {image}
         </Grid>
-        <Grid item xs={6}>
-          {props.issues.blocker}
-        </Grid>
-        <Grid item xs={6}>
-          Critical :
-        </Grid>
-        <Grid item xs={6}>
-          {props.issues.critical}
-        </Grid>
-        <Grid item xs={6}>
-          Major :
-        </Grid>
-        <Grid item xs={6}>
-          {props.issues.major}
-        </Grid>
-        <Grid item xs={6}>
-          Minor :
-        </Grid>
-        <Grid item xs={6}>
-          {props.issues.minor}
-        </Grid>
-        <Grid item xs={6}>
-          Info :
-        </Grid>
-        <Grid item xs={6}>
-          {props.issues.info}
+        <Grid container item xs={6}>
+          <Grid item xs={6}>
+            Blocker :
+          </Grid>
+          <Grid item xs={6}>
+            {props.issues.blocker}
+          </Grid>
+          <Grid item xs={6}>
+            Critical :
+          </Grid>
+          <Grid item xs={6}>
+            {props.issues.critical}
+          </Grid>
+          <Grid item xs={6}>
+            Major :
+          </Grid>
+          <Grid item xs={6}>
+            {props.issues.major}
+          </Grid>
+          <Grid item xs={6}>
+            Minor :
+          </Grid>
+          <Grid item xs={6}>
+            {props.issues.minor}
+          </Grid>
+          <Grid item xs={6}>
+            Info :
+          </Grid>
+          <Grid item xs={6}>
+            {props.issues.info}
+          </Grid>
         </Grid>
       </Grid>
     </div>
@@ -73,19 +120,26 @@ function ApplicationSonar(props: Props) {
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    border: '1px solid gray'
   },
-  gateOk: {
-    backgroundColor: 'green'
+  state: {
+    fontSize: '40px',
+    textAlign: 'center',
+    height: '100%',
+    verticalAlign: 'middle'
   },
-  gateWarn: {
-    backgroundColor: 'orange'
+  stateNone: {
+    color: 'gray'
   },
-  gateError: {
-    backgroundColor: 'red'
+  stateOk: {
+    color: 'green'
   },
-  gateNone: {
-    backgroundColor: 'gray'
+  stateWarn: {
+    color: 'orange'
+  },
+  stateError: {
+    color: 'red'
   }
 };
 

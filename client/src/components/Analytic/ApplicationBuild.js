@@ -1,27 +1,27 @@
 // @flow
 
-import React from "react";
-import Moment from "react-moment";
+import React from 'react';
+import Moment from 'react-moment';
 
-import ThumbUp from "@material-ui/icons/ThumbUp";
-import ThumbDown from "@material-ui/icons/ThumbDown";
-import BugReport from "@material-ui/icons/BugReport";
-import ReportProblem from "@material-ui/icons/ReportProblem";
-import HourglassFull from "@material-ui/icons/HourglassFull";
-import Block from "@material-ui/icons/Block";
-import Cancel from "@material-ui/icons/Cancel";
+import ThumbUp from '@material-ui/icons/ThumbUp';
+import ThumbDown from '@material-ui/icons/ThumbDown';
+import BugReport from '@material-ui/icons/BugReport';
+import ReportProblem from '@material-ui/icons/ReportProblem';
+import HourglassFull from '@material-ui/icons/HourglassFull';
+import Block from '@material-ui/icons/Block';
+import Cancel from '@material-ui/icons/Cancel';
 
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import red from '@material-ui/core/colors/red';
 
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 
 type Props = {
   name: string,
@@ -38,7 +38,7 @@ function ApplicationBuild(props: Props) {
         props.status !== 2 &&
         getTemplate(
           props,
-          "New",
+          'New',
           <Block
             className={classNames(props.classes.state, props.classes.stateNew)}
           />
@@ -46,7 +46,7 @@ function ApplicationBuild(props: Props) {
       {props.status === 1 &&
         getTemplate(
           props,
-          "In progress",
+          'In progress',
           <HourglassFull
             className={classNames(
               props.classes.state,
@@ -58,7 +58,7 @@ function ApplicationBuild(props: Props) {
         props.result === 2 &&
         getTemplate(
           props,
-          "Succeeded",
+          'Succeeded',
           <ThumbUp
             className={classNames(
               props.classes.state,
@@ -70,7 +70,7 @@ function ApplicationBuild(props: Props) {
         props.result === 4 &&
         getTemplate(
           props,
-          "PartiallySucceeded",
+          'PartiallySucceeded',
           <ReportProblem
             className={classNames(
               props.classes.state,
@@ -82,7 +82,7 @@ function ApplicationBuild(props: Props) {
         props.result === 8 &&
         getTemplate(
           props,
-          "Failed",
+          'Failed',
           <ThumbDown
             className={classNames(
               props.classes.state,
@@ -94,7 +94,7 @@ function ApplicationBuild(props: Props) {
         props.result === 32 &&
         getTemplate(
           props,
-          "Canceled",
+          'Canceled',
           <Cancel
             className={classNames(
               props.classes.state,
@@ -109,7 +109,7 @@ function ApplicationBuild(props: Props) {
         props.result !== 32 &&
         getTemplate(
           props,
-          "Unknown",
+          'Unknown',
           <BugReport
             className={classNames(
               props.classes.state,
@@ -136,8 +136,8 @@ function getTemplate(props: Props, status: string, icon: any) {
           <Tooltip title={status}>{icon}</Tooltip>
         </Typography>
         <Typography className={props.classes.date} color="textSecondary">
-          <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment> (
-          <Moment fromNow>{props.finishTime}</Moment>)
+          <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
+          <br />(<Moment fromNow>{props.finishTime}</Moment>)
         </Typography>
       </CardContent>
     </Card>
@@ -146,32 +146,32 @@ function getTemplate(props: Props, status: string, icon: any) {
 
 const styles = {
   state: {
-    fontSize: "40px"
+    fontSize: '40px'
   },
   stateInProgress: {
-    color: "blue"
+    color: 'blue'
   },
   stateNew: {
-    color: "gray"
+    color: 'gray'
   },
   stateSucceeded: {
-    color: "green"
+    color: 'green'
   },
   statePartial: {
-    color: "orange"
+    color: 'orange'
   },
   stateFailed: {
-    color: "red"
+    color: 'red'
   },
   stateCanceled: {
-    color: "purple"
+    color: 'purple'
   },
   stateUnknown: {
-    color: "pink"
+    color: 'pink'
   },
   card: {
-    border: "1px solid gray",
-    textAlign: "center"
+    border: '1px solid gray',
+    textAlign: 'center'
   },
   title: {
     fontSize: 14

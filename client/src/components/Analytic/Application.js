@@ -1,24 +1,24 @@
 // @flow
 
-import React, { Component } from "react";
-import ApplicationBuild from "./ApplicationBuild";
-import ApplicationRelease from "./ApplicationRelease";
-import ApplicationSonar from "./ApplicationSonar";
+import React, { Component } from 'react';
+import ApplicationBuild from './ApplicationBuild';
+import ApplicationRelease from './ApplicationRelease';
+import ApplicationSonar from './ApplicationSonar';
 
-import arraySort from "array-sort";
+import arraySort from 'array-sort';
 
-import Card from "@material-ui/core/Card";
+import Card from '@material-ui/core/Card';
 // import CardActions from '@material-ui/core/CardActions';
-import CardContent from "@material-ui/core/CardContent";
+import CardContent from '@material-ui/core/CardContent';
 // import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ThumbDown from "@material-ui/icons/ThumbDown";
-import ThumbUp from "@material-ui/icons/ThumbUp";
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ThumbDown from '@material-ui/icons/ThumbDown';
+import ThumbUp from '@material-ui/icons/ThumbUp';
 
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import { withStyles } from "@material-ui/core/styles";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import { withStyles } from '@material-ui/core/styles';
 
 type Props = { id: number, code: string };
 type State = {
@@ -49,7 +49,7 @@ class Application extends Component<Props, State> {
       //builds
       const responseBuilds = await fetch(`/azdev/builds/${this.props.code}`);
       const jsonBuilds = await responseBuilds.json();
-      arraySort(jsonBuilds.builds, "name");
+      arraySort(jsonBuilds.builds, 'name');
 
       //releases
       const responseReleases = await fetch(
@@ -87,7 +87,7 @@ class Application extends Component<Props, State> {
     switch (build.status) {
       case 1:
         //In progress
-        return "blue";
+        return 'blue';
         break;
       case 2:
         //Completed
@@ -95,26 +95,26 @@ class Application extends Component<Props, State> {
         switch (build.result) {
           case 2:
             //Succeeded
-            return "green";
+            return 'green';
             break;
           case 4:
             //PartiallySucceeded
-            return "orange";
+            return 'orange';
             break;
           case 8:
             //Failed
-            return "red";
+            return 'red';
             break;
           case 32:
             //Canceled
-            return "gray";
+            return 'gray';
             break;
           default:
-            return "gray";
+            return 'gray';
         }
         break;
       default:
-        return "gray";
+        return 'gray';
     }
   };
 
@@ -122,7 +122,7 @@ class Application extends Component<Props, State> {
     switch (build.status) {
       case 1:
         //In progress
-        return "blue";
+        return 'blue';
         break;
       case 2:
         //Completed
@@ -130,47 +130,35 @@ class Application extends Component<Props, State> {
         switch (build.result) {
           case 2:
             //Succeeded
-            return "green";
+            return 'green';
             break;
           case 4:
             //PartiallySucceeded
-            return "orange";
+            return 'orange';
             break;
           case 8:
             //Failed
-            return "red";
+            return 'red';
             break;
           case 32:
             //Canceled
-            return "gray";
+            return 'gray';
             break;
           default:
-            return "gray";
+            return 'gray';
         }
         break;
       default:
-        return "gray";
+        return 'gray';
     }
   };
 
-  render() {
-    return (
-      <div>
-        <div>
-          <b>{this.props.code}</b>
-        </div>
-
-        {this.state.error && <div>Error: {this.state.error}</div>}
-
-        {this.state.isLoading && (
-          <div>
-            <CircularProgress />
-          </div>
-        )}
-
-        {!this.state.isLoading && !this.state.error && this.state.builds && (
+  renderBuilds = (key: string) => {
+    if (this.state.builds) {
+      return (
+        <GridListTile key={key} cols={5}>
           <div className={this.props.root}>
-            <GridList cellHeight={160} className={this.props.gridList} cols={2}>
+            <GridList className={this.props.gridList} cols={4}>
               {this.state.builds.map(build => (
                 <GridListTile key={build.id} cols={1}>
                   <ApplicationBuild
@@ -182,25 +170,68 @@ class Application extends Component<Props, State> {
                 </GridListTile>
               ))}
             </GridList>
+          </div>
+        </GridListTile>
+      );
+    } else {
+      return null;
+    }
+  };
 
-            {this.state.sonar && <ApplicationSonar {...this.state.sonar} />}
+  renderReleases = (key: string) => {
+    if (this.state.releases) {
+      return (
+        <GridListTile key={key} cols={5}>
+          <GridList className={this.props.gridList} cols={4}>
+            {this.state.releases.map(release => (
+              <ApplicationRelease
+                name={release.name}
+                environments={release.environments}
+              />
+            ))}
+          </GridList>
+        </GridListTile>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  renderSonar = (key: string) => {
+    if (this.state.sonar) {
+      return (
+        <GridListTile key={key} cols={2}>
+          <ApplicationSonar {...this.state.sonar} />
+        </GridListTile>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <div>
+          <b>{this.props.code}</b>
+        </div>
+        {this.state.error && <div>Error: {this.state.error}</div>}
+        {this.state.isLoading && (
+          <div>
+            <CircularProgress />
           </div>
         )}
-
-        {!this.state.isLoading && !this.state.error && this.state.releases && (
-          <div className={this.props.root}>
-            <GridList cellHeight={160} className={this.props.gridList} cols={2}>
-              {this.state.releases.map(release => (
-                <GridListTile key={release.name} cols={1}>
-                  <ApplicationRelease
-                    name={release.name}
-                    environments={release.environments}
-                  />
-                </GridListTile>
-              ))}
+        {!this.state.isLoading &&
+          !this.state.error &&
+          (this.state.builds.length > 0 ||
+            this.state.releases.length > 0 ||
+            this.state.sonar) && (
+            <GridList className={this.props.gridList} cols={12}>
+              {this.renderBuilds('0')}
+              {this.renderReleases('1')}
+              {this.renderSonar('2')}
             </GridList>
-          </div>
-        )}
+          )}
       </div>
     );
   }
@@ -208,18 +239,18 @@ class Application extends Component<Props, State> {
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
+    /*display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper*/
   },
   gridList: {
-    width: 500,
-    height: 450
+    // width: 500,
+    // height: 450
   },
   subheader: {
-    width: "100%"
+    width: '100%'
   }
 });
 
