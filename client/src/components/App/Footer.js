@@ -7,7 +7,8 @@ const styles = theme => ({
   footer: {
     backgroundColor: '#3f51b5',
     padding: theme.spacing.unit * 2,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 20
   }
 });
 

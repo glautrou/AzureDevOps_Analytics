@@ -78,13 +78,10 @@ function ApplicationSonar(props: Props) {
   return (
     <div className={props.classes.root}>
       <Grid container>
-        <Grid item xs={12} className={props.classes.header}>
-          SonarQube
-        </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           {image}
         </Grid>
-        <Grid container item xs={8}>
+        <Grid container item xs={9}>
           <Grid container item xs={6}>
             <Grid item xs={12}>
               <Chip

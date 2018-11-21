@@ -8,9 +8,8 @@ import ApplicationSonar from './ApplicationSonar';
 import arraySort from 'array-sort';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 type Props = { id: number, code: string };
 type State = {
@@ -148,22 +147,20 @@ class Application extends Component<Props, State> {
   renderBuilds = (key: string) => {
     if (this.state.builds) {
       return (
-        <GridListTile key={key} cols={5} className={this.props.gridList}>
-          <div className={this.props.root}>
-            <GridList cols={4}>
-              {this.state.builds.map(build => (
-                <GridListTile key={build.id} cols={1}>
-                  <ApplicationBuild
-                    name={build.name}
-                    status={build.status}
-                    result={build.result}
-                    finishTime={build.finishTime}
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
-          </div>
-        </GridListTile>
+        <Grid container item xs={5} className={this.props.gridList}>
+          {/* <div className={this.props.root}> */}
+          {this.state.builds.map(build => (
+            <Grid item key={build.id} xs={3}>
+              <ApplicationBuild
+                name={build.name}
+                status={build.status}
+                result={build.result}
+                finishTime={build.finishTime}
+              />
+            </Grid>
+          ))}
+          {/* </div> */}
+        </Grid>
       );
     } else {
       return null;
@@ -172,18 +169,18 @@ class Application extends Component<Props, State> {
 
   renderReleases = (key: string) => {
     if (this.state.releases) {
+      const hasManyReleases = this.state.releases.length > 1;
       return (
-        <GridListTile key={key} cols={5} className={this.props.gridList}>
-          <GridList cols={1}>
-            {this.state.releases.map(release => (
-              <ApplicationRelease
-                key={release.name}
-                name={release.name}
-                environments={release.environments}
-              />
-            ))}
-          </GridList>
-        </GridListTile>
+        <Grid container item xs={5} className={this.props.gridList}>
+          {this.state.releases.map(release => (
+            <ApplicationRelease
+              key={release.name}
+              name={release.name}
+              environments={release.environments}
+              hasManyReleases={hasManyReleases}
+            />
+          ))}
+        </Grid>
       );
     } else {
       return null;
@@ -193,9 +190,9 @@ class Application extends Component<Props, State> {
   renderSonar = (key: string) => {
     if (this.state.sonar) {
       return (
-        <GridListTile key={key} cols={2}>
+        <Grid key={key} item xs={2}>
           <ApplicationSonar {...this.state.sonar} />
-        </GridListTile>
+        </Grid>
       );
     } else {
       return null;
@@ -204,9 +201,9 @@ class Application extends Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <div>
-          <b>{this.props.code}</b>
+      <div className={this.props.classes.root}>
+        <div className={this.props.classes.title}>
+          <div className={this.props.classes.titleWrap}>{this.props.code}</div>
         </div>
         {this.state.error && <div>Error: {this.state.error}</div>}
         {this.state.isLoading && (
@@ -219,11 +216,11 @@ class Application extends Component<Props, State> {
           (this.state.builds.length > 0 ||
             this.state.releases.length > 0 ||
             this.state.sonar) && (
-            <GridList className={this.props.gridList} cols={12} spacing={50}>
+            <Grid container spacing={40}>
               {this.renderBuilds('0')}
               {this.renderReleases('1')}
               {this.renderSonar('2')}
-            </GridList>
+            </Grid>
           )}
       </div>
     );
@@ -232,19 +229,17 @@ class Application extends Component<Props, State> {
 
 const styles = theme => ({
   root: {
-    /*display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper*/
+    marginBottom: 20
   },
-  gridList: {
-    // width: 500,
-    // height: 450
-    //height: 500
+  title: {
+    width: '100%',
+    background: '#ddd',
+    marginBottom: 10
   },
-  subheader: {
-    width: '100%'
+  titleWrap: {
+    width: '90%',
+    margin: '0 auto',
+    padding: '10px 0'
   }
 });
 
