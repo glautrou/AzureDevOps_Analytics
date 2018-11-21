@@ -115,6 +115,8 @@ function ApplicationBuild(props: Props) {
 }
 
 function getTemplate(props: Props, status: string, icon: any) {
+  const hastFinishDate =
+    props.finishTime && new Date(props.finishTime).getFullYear() > 2000;
   return (
     <>
       <div className={props.classes.title}>
@@ -125,10 +127,12 @@ function getTemplate(props: Props, status: string, icon: any) {
       <div>
         <Tooltip title={status}>{icon}</Tooltip>
       </div>
-      <div className={props.classes.date}>
-        <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
-        <br />(<Moment fromNow>{props.finishTime}</Moment>)
-      </div>
+      {hastFinishDate && (
+        <div className={props.classes.date}>
+          <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
+          <br />(<Moment fromNow>{props.finishTime}</Moment>)
+        </div>
+      )}
     </>
   );
 }

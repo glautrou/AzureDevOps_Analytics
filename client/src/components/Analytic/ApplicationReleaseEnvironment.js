@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Moment from 'react-moment';
+import '../../styles/animations.css';
 
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
@@ -44,7 +45,8 @@ function ApplicationReleaseEnvironment(props: Props) {
           <HourglassFull
             className={classNames(
               props.classes.state,
-              props.classes.stateInProgress
+              props.classes.stateInProgress,
+              'rotate'
             )}
           />
         )}
@@ -101,6 +103,8 @@ function ApplicationReleaseEnvironment(props: Props) {
 }
 
 function getTemplate(props: Props, status: string, icon: any) {
+  const hastFinishDate =
+    props.finishTime && new Date(props.finishTime).getFullYear() > 2000;
   return (
     <div className={props.classes.root}>
       <div className={props.classes.title}>
@@ -120,10 +124,12 @@ function getTemplate(props: Props, status: string, icon: any) {
           </Grid>
         </Hidden>
       </Grid>
-      <div className={props.classes.date}>
-        <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
-        <br />(<Moment fromNow>{props.finishTime}</Moment>)
-      </div>
+      {hastFinishDate && (
+        <div className={props.classes.date}>
+          <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
+          <br />(<Moment fromNow>{props.finishTime}</Moment>)
+        </div>
+      )}
     </div>
   );
 }
