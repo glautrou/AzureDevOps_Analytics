@@ -12,6 +12,7 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ReportProblem from '@material-ui/icons/ReportProblem';
 import Block from '@material-ui/icons/Block';
+import Hidden from '@material-ui/core/Hidden';
 
 type Props = {
   qualityGate: string,
@@ -78,45 +79,43 @@ function ApplicationSonar(props: Props) {
   return (
     <div className={props.classes.root}>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={12} lg={3}>
           {image}
         </Grid>
-        <Grid container item xs={9}>
-          <Grid container item xs={6}>
-            <Grid item xs={12}>
-              <Chip
-                label="Blocker"
-                color={props.issues.blocker > 0 ? 'primary' : 'default'}
-                avatar={
-                  <Avatar className={props.classes.chip}>
-                    {props.issues.blocker}
-                  </Avatar>
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Chip
-                label="Critical"
-                avatar={
-                  <Avatar className={props.classes.chip}>
-                    {props.issues.critical}
-                  </Avatar>
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Chip
-                label="Major"
-                avatar={
-                  <Avatar className={props.classes.chip}>
-                    {props.issues.major}
-                  </Avatar>
-                }
-              />
-            </Grid>
+        <Grid container item xs={12} lg={9}>
+          <Grid item xs={12} lg={6}>
+            <Chip
+              label="Blocker"
+              color={props.issues.blocker > 0 ? 'primary' : 'default'}
+              avatar={
+                <Avatar className={props.classes.chip}>
+                  {props.issues.blocker}
+                </Avatar>
+              }
+            />
           </Grid>
-          <Grid container item xs={6}>
-            <Grid item xs={12}>
+          <Grid item xs={12} lg={6}>
+            <Chip
+              label="Critical"
+              avatar={
+                <Avatar className={props.classes.chip}>
+                  {props.issues.critical}
+                </Avatar>
+              }
+            />
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Chip
+              label="Major"
+              avatar={
+                <Avatar className={props.classes.chip}>
+                  {props.issues.major}
+                </Avatar>
+              }
+            />
+          </Grid>
+          <Hidden smDown>
+            <Grid item xs={12} lg={6}>
               <Chip
                 label="Minor"
                 avatar={
@@ -126,7 +125,9 @@ function ApplicationSonar(props: Props) {
                 }
               />
             </Grid>
-            <Grid item xs={12}>
+          </Hidden>
+          <Hidden smDown>
+            <Grid item xs={12} lg={6}>
               <Chip
                 label="Info"
                 avatar={
@@ -136,7 +137,7 @@ function ApplicationSonar(props: Props) {
                 }
               />
             </Grid>
-          </Grid>
+          </Hidden>
         </Grid>
       </Grid>
     </div>

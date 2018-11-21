@@ -13,6 +13,7 @@ import Block from '@material-ui/icons/Block';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 import classNames from 'classnames/bind';
 
@@ -108,14 +109,16 @@ function getTemplate(props: Props, status: string, icon: any) {
         </Tooltip>
       </div>
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item md={12} lg={4}>
           <Tooltip title={status}>{icon}</Tooltip>
         </Grid>
-        <Grid item xs={8} className={props.classes.version}>
-          {props.release}
-          <br />
-          {props.version}
-        </Grid>
+        <Hidden smDown>
+          <Grid item md={12} lg={8} className={props.classes.version}>
+            {props.release}
+            <br />
+            {props.version}
+          </Grid>
+        </Hidden>
       </Grid>
       <div className={props.classes.date}>
         <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
