@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Application from './Application.js';
 import arraySort from 'array-sort';
+import * as qs from 'query-string';
 
 class Analytic extends Component {
   state = {
@@ -10,10 +11,31 @@ class Analytic extends Component {
   };
 
   async componentDidMount() {
+    await this.loadApplications();
+    this.interval = setInterval(
+      async () => this.loadApplications(),
+      5 * 60 * 1000
+    );
+  }
+
+  async componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  async loadApplications() {
     this.setState({ isLoading: true });
+
+    const queryStrings = qs.parse(this.props.location.search);
+    const apps = queryStrings.apps;
+
     try {
       const response = await fetch('/azdev/projects');
-      const json = await response.json();
+      let json = await response.json();
+
+      if (apps) {
+        json = json.filter(value => apps.indexOf(value.code) !== -1);
+      }
+
       arraySort(json, 'code');
       this.setState({ applications: json, isLoading: false });
     } catch (error) {
