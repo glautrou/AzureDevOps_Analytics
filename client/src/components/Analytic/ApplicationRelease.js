@@ -6,6 +6,7 @@ import ApplicationReleaseEnvironment from './ApplicationReleaseEnvironment.js';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 
 type Props = {
   name: string,
@@ -14,25 +15,22 @@ type Props = {
 
 function ApplicationRelease(props: Props) {
   return (
-    <GridList cols={4}>
+    <Grid container>
+      <Grid item xs={12}>
+        {props.name}
+      </Grid>
       {props.environments.map(i => (
-        <GridListTile key={i.name} cols={1} className={props.classes.root}>
+        <Grid item xs={3} key={i.name} className={props.classes.root}>
           <ApplicationReleaseEnvironment key={i.name} {...i} />
-        </GridListTile>
+        </Grid>
       ))}
-    </GridList>
-    // <div>
-    //   <div>{props.name}</div>
-    //   {props.environments.map(i => (
-    //     <ApplicationReleaseEnvironment key={i.name} {...i} />
-    //   ))}
-    // </div>
+    </Grid>
   );
 }
 
 const styles = {
   root: {
-    boxShadow: 'inset 0px 0px 1px 1px #aaa'
+    //boxShadow: 'inset 0px 0px 1px 1px #aaa'
   }
 };
 

@@ -150,7 +150,9 @@ const styles = {
   root: {
     flexGrow: 1,
     boxShadow: 'inset 0px 0px 1px 1px #aaa',
-    padding: '10px;'
+    borderRadius: '20px',
+    backgroundColor: '#eee',
+    padding: '10px'
   },
   header: {
     textAlign: 'center',

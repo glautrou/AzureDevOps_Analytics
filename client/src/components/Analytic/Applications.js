@@ -54,7 +54,7 @@ class Analytic extends Component {
       return <p>Error: {this.state.error.message}</p>;
     }
     return (
-      <ul>
+      <>
         {this.state.applications.map(application => (
           <Application
             key={application.id}
@@ -62,7 +62,7 @@ class Analytic extends Component {
             code={application.code}
           />
         ))}
-      </ul>
+      </>
     );
   }
 }

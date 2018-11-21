@@ -13,8 +13,6 @@ import Cancel from '@material-ui/icons/Cancel';
 
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
 import classNames from 'classnames/bind';
 
@@ -28,7 +26,7 @@ type Props = {
 
 function ApplicationBuild(props: Props) {
   return (
-    <div>
+    <div className={props.classes.root}>
       {props.status !== 1 &&
         props.status !== 2 &&
         getTemplate(
@@ -118,22 +116,32 @@ function ApplicationBuild(props: Props) {
 
 function getTemplate(props: Props, status: string, icon: any) {
   return (
-    <Card className={props.classes.card}>
-      <CardContent>
-        <div className={props.classes.title}>{props.name}</div>
-        <div>
-          <Tooltip title={status}>{icon}</Tooltip>
-        </div>
-        <div className={props.classes.date}>
-          <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
-          <br />(<Moment fromNow>{props.finishTime}</Moment>)
-        </div>
-      </CardContent>
-    </Card>
+    <>
+      <div className={props.classes.title}>
+        <Tooltip title={props.name}>
+          <div>{props.name}</div>
+        </Tooltip>
+      </div>
+      <div>
+        <Tooltip title={status}>{icon}</Tooltip>
+      </div>
+      <div className={props.classes.date}>
+        <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
+        <br />(<Moment fromNow>{props.finishTime}</Moment>)
+      </div>
+    </>
   );
 }
 
 const styles = {
+  root: {
+    flexGrow: 1,
+    boxShadow: 'inset 0px 0px 1px 1px #aaa',
+    borderRadius: '20px',
+    backgroundColor: '#eee',
+    padding: '10px',
+    textAlign: 'center'
+  },
   state: {
     fontSize: '40px'
   },
@@ -158,14 +166,15 @@ const styles = {
   stateUnknown: {
     color: 'pink'
   },
-  card: {
-    border: '1px solid gray',
-    textAlign: 'center'
-  },
   title: {
-    fontSize: 14
+    fontSize: 14,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
-  date: {}
+  date: {
+    fontSize: 12
+  }
 };
 
 export default withStyles(styles)(ApplicationBuild);

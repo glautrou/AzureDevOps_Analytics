@@ -148,9 +148,9 @@ class Application extends Component<Props, State> {
   renderBuilds = (key: string) => {
     if (this.state.builds) {
       return (
-        <GridListTile key={key} cols={5}>
+        <GridListTile key={key} cols={5} className={this.props.gridList}>
           <div className={this.props.root}>
-            <GridList className={this.props.gridList} cols={4}>
+            <GridList cols={4}>
               {this.state.builds.map(build => (
                 <GridListTile key={build.id} cols={1}>
                   <ApplicationBuild
@@ -173,8 +173,8 @@ class Application extends Component<Props, State> {
   renderReleases = (key: string) => {
     if (this.state.releases) {
       return (
-        <GridListTile key={key} cols={5}>
-          <GridList className={this.props.gridList} cols={4}>
+        <GridListTile key={key} cols={5} className={this.props.gridList}>
+          <GridList cols={1}>
             {this.state.releases.map(release => (
               <ApplicationRelease
                 key={release.name}
@@ -219,7 +219,7 @@ class Application extends Component<Props, State> {
           (this.state.builds.length > 0 ||
             this.state.releases.length > 0 ||
             this.state.sonar) && (
-            <GridList className={this.props.gridList} cols={12}>
+            <GridList className={this.props.gridList} cols={12} spacing={50}>
               {this.renderBuilds('0')}
               {this.renderReleases('1')}
               {this.renderSonar('2')}
@@ -241,6 +241,7 @@ const styles = theme => ({
   gridList: {
     // width: 500,
     // height: 450
+    //height: 500
   },
   subheader: {
     width: '100%'
