@@ -7,7 +7,7 @@ import ApplicationSonar from './ApplicationSonar';
 
 import arraySort from 'array-sort';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -200,29 +200,41 @@ class Application extends Component<Props, State> {
   };
 
   render() {
+    let hideApplication =
+      !this.state.isLoading &&
+      !this.state.error &&
+      this.state.builds.length === 0 &&
+      this.state.releases.length === 0 &&
+      !this.state.sonar;
     return (
-      <div className={this.props.classes.root}>
-        <div className={this.props.classes.title}>
-          <div className={this.props.classes.titleWrap}>{this.props.code}</div>
-        </div>
-        {this.state.error && <div>Error: {this.state.error}</div>}
-        {this.state.isLoading && (
-          <div>
-            <CircularProgress />
+      <>
+        {!hideApplication && (
+          <div className={this.props.classes.root}>
+            <div className={this.props.classes.title}>
+              <div className={this.props.classes.titleWrap}>
+                {this.props.code}
+              </div>
+            </div>
+            {this.state.error && <div>Error: {this.state.error}</div>}
+            {this.state.isLoading && (
+              <div>
+                <LinearProgress />
+              </div>
+            )}
+            {!this.state.isLoading &&
+              !this.state.error &&
+              (this.state.builds.length > 0 ||
+                this.state.releases.length > 0 ||
+                this.state.sonar) && (
+                <Grid container spacing={40}>
+                  {this.renderBuilds('0')}
+                  {this.renderReleases('1')}
+                  {this.renderSonar('2')}
+                </Grid>
+              )}
           </div>
         )}
-        {!this.state.isLoading &&
-          !this.state.error &&
-          (this.state.builds.length > 0 ||
-            this.state.releases.length > 0 ||
-            this.state.sonar) && (
-            <Grid container spacing={40}>
-              {this.renderBuilds('0')}
-              {this.renderReleases('1')}
-              {this.renderSonar('2')}
-            </Grid>
-          )}
-      </div>
+      </>
     );
   }
 }
