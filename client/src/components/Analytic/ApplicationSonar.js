@@ -5,15 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames/bind';
 
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
-import BugReport from '@material-ui/icons/BugReport';
 import ReportProblem from '@material-ui/icons/ReportProblem';
-import HourglassFull from '@material-ui/icons/HourglassFull';
 import Block from '@material-ui/icons/Block';
-import Cancel from '@material-ui/icons/Cancel';
 
 type Props = {
   qualityGate: string,
@@ -74,43 +73,73 @@ function ApplicationSonar(props: Props) {
         />
       );
       break;
+    default:
+      image = null;
   }
   return (
     <div className={props.classes.root}>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={12} className={props.classes.header}>
+          SonarQube
+        </Grid>
+        <Grid item xs={4}>
           {image}
         </Grid>
-        <Grid container item xs={6}>
-          <Grid item xs={6}>
-            Blocker :
+        <Grid container item xs={8}>
+          <Grid container item xs={6}>
+            <Grid item xs={12}>
+              <Chip
+                label="Blocker"
+                color={props.issues.blocker > 0 ? 'secondary' : 'default'}
+                avatar={
+                  <Avatar className={props.classes.chip}>
+                    {props.issues.blocker}
+                  </Avatar>
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Chip
+                label="Critical"
+                avatar={
+                  <Avatar className={props.classes.chip}>
+                    {props.issues.critical}
+                  </Avatar>
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Chip
+                label="Major"
+                avatar={
+                  <Avatar className={props.classes.chip}>
+                    {props.issues.major}
+                  </Avatar>
+                }
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {props.issues.blocker}
-          </Grid>
-          <Grid item xs={6}>
-            Critical :
-          </Grid>
-          <Grid item xs={6}>
-            {props.issues.critical}
-          </Grid>
-          <Grid item xs={6}>
-            Major :
-          </Grid>
-          <Grid item xs={6}>
-            {props.issues.major}
-          </Grid>
-          <Grid item xs={6}>
-            Minor :
-          </Grid>
-          <Grid item xs={6}>
-            {props.issues.minor}
-          </Grid>
-          <Grid item xs={6}>
-            Info :
-          </Grid>
-          <Grid item xs={6}>
-            {props.issues.info}
+          <Grid container item xs={6}>
+            <Grid item xs={12}>
+              <Chip
+                label="Minor"
+                avatar={
+                  <Avatar className={props.classes.chip}>
+                    {props.issues.minor}
+                  </Avatar>
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Chip
+                label="Info"
+                avatar={
+                  <Avatar className={props.classes.chip}>
+                    {props.issues.info}
+                  </Avatar>
+                }
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -121,7 +150,13 @@ function ApplicationSonar(props: Props) {
 const styles = {
   root: {
     flexGrow: 1,
-    border: '1px solid gray'
+    boxShadow: 'inset 0px 0px 1px 1px #aaa',
+    padding: '10px;'
+  },
+  header: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: '10px'
   },
   state: {
     fontSize: '40px',
@@ -140,6 +175,9 @@ const styles = {
   },
   stateError: {
     color: 'red'
+  },
+  chip: {
+    fontSize: '14px'
   }
 };
 

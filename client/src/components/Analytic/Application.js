@@ -7,15 +7,7 @@ import ApplicationSonar from './ApplicationSonar';
 
 import arraySort from 'array-sort';
 
-import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-// import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ThumbDown from '@material-ui/icons/ThumbDown';
-import ThumbUp from '@material-ui/icons/ThumbUp';
-
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { withStyles } from '@material-ui/core/styles';
@@ -83,75 +75,75 @@ class Application extends Component<Props, State> {
   //   this.saySomething("element clicked");
   // };
 
-  getBuildColour = build => {
-    switch (build.status) {
-      case 1:
-        //In progress
-        return 'blue';
-        break;
-      case 2:
-        //Completed
-        //check completion state
-        switch (build.result) {
-          case 2:
-            //Succeeded
-            return 'green';
-            break;
-          case 4:
-            //PartiallySucceeded
-            return 'orange';
-            break;
-          case 8:
-            //Failed
-            return 'red';
-            break;
-          case 32:
-            //Canceled
-            return 'gray';
-            break;
-          default:
-            return 'gray';
-        }
-        break;
-      default:
-        return 'gray';
-    }
-  };
+  // getBuildColour = build => {
+  //   switch (build.status) {
+  //     case 1:
+  //       //In progress
+  //       return 'blue';
+  //       break;
+  //     case 2:
+  //       //Completed
+  //       //check completion state
+  //       switch (build.result) {
+  //         case 2:
+  //           //Succeeded
+  //           return 'green';
+  //           break;
+  //         case 4:
+  //           //PartiallySucceeded
+  //           return 'orange';
+  //           break;
+  //         case 8:
+  //           //Failed
+  //           return 'red';
+  //           break;
+  //         case 32:
+  //           //Canceled
+  //           return 'gray';
+  //           break;
+  //         default:
+  //           return 'gray';
+  //       }
+  //       break;
+  //     default:
+  //       return 'gray';
+  //   }
+  // };
 
-  getBuildStatus2 = build => {
-    switch (build.status) {
-      case 1:
-        //In progress
-        return 'blue';
-        break;
-      case 2:
-        //Completed
-        //check completion state
-        switch (build.result) {
-          case 2:
-            //Succeeded
-            return 'green';
-            break;
-          case 4:
-            //PartiallySucceeded
-            return 'orange';
-            break;
-          case 8:
-            //Failed
-            return 'red';
-            break;
-          case 32:
-            //Canceled
-            return 'gray';
-            break;
-          default:
-            return 'gray';
-        }
-        break;
-      default:
-        return 'gray';
-    }
-  };
+  // getBuildStatus2 = build => {
+  //   switch (build.status) {
+  //     case 1:
+  //       //In progress
+  //       return 'blue';
+  //       break;
+  //     case 2:
+  //       //Completed
+  //       //check completion state
+  //       switch (build.result) {
+  //         case 2:
+  //           //Succeeded
+  //           return 'green';
+  //           break;
+  //         case 4:
+  //           //PartiallySucceeded
+  //           return 'orange';
+  //           break;
+  //         case 8:
+  //           //Failed
+  //           return 'red';
+  //           break;
+  //         case 32:
+  //           //Canceled
+  //           return 'gray';
+  //           break;
+  //         default:
+  //           return 'gray';
+  //       }
+  //       break;
+  //     default:
+  //       return 'gray';
+  //   }
+  // };
 
   renderBuilds = (key: string) => {
     if (this.state.builds) {
