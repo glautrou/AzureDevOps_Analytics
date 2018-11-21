@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
 import classNames from 'classnames/bind';
 
@@ -105,20 +104,14 @@ function getTemplate(props: Props, status: string, icon: any) {
   return (
     <Card className={props.classes.card}>
       <CardContent>
-        <Typography
-          className={props.classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {props.name}
-        </Typography>
-        <Typography variant="h5" component="h2">
+        <div className={props.classes.title}>{props.name}</div>
+        <div>
           <Tooltip title={status}>{icon}</Tooltip>
-        </Typography>
-        <Typography className={props.classes.date} color="textSecondary">
+        </div>
+        <div className={props.classes.date}>
           <Moment format="DD/MM/YYYY HH:mm">{props.finishTime}</Moment>
           <br />(<Moment fromNow>{props.finishTime}</Moment>)
-        </Typography>
+        </div>
       </CardContent>
     </Card>
   );

@@ -177,6 +177,7 @@ class Application extends Component<Props, State> {
           <GridList className={this.props.gridList} cols={4}>
             {this.state.releases.map(release => (
               <ApplicationRelease
+                key={release.name}
                 name={release.name}
                 environments={release.environments}
               />

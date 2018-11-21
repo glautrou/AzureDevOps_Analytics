@@ -1,13 +1,13 @@
 // @flow
 
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   footer: {
-    backgroundColor: "#3f51b5",
-    padding: theme.spacing.unit * 2
+    backgroundColor: '#3f51b5',
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center'
   }
 });
 
@@ -16,17 +16,7 @@ type Props = { classes: any };
 function Footer(props: Props) {
   return (
     <footer className={props.classes.footer}>
-      <Typography variant="h6" align="center" gutterBottom>
-        Azure DevOps Analytics
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        align="center"
-        color="textSecondary"
-        component="p"
-      >
-        Copyright
-      </Typography>
+      <div>Azure DevOps Analytics- Copyright</div>
     </footer>
   );
 }

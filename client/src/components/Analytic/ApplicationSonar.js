@@ -8,7 +8,6 @@ import classNames from 'classnames/bind';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ReportProblem from '@material-ui/icons/ReportProblem';
@@ -28,9 +27,9 @@ type Props = {
 
 function getTemplate(props: Props, status: string, icon: any) {
   return (
-    <Typography variant="h5" component="h2" className={props.classes.state}>
+    <div className={props.classes.state}>
       <Tooltip title={status}>{icon}</Tooltip>
-    </Typography>
+    </div>
   );
 }
 
@@ -90,7 +89,7 @@ function ApplicationSonar(props: Props) {
             <Grid item xs={12}>
               <Chip
                 label="Blocker"
-                color={props.issues.blocker > 0 ? 'secondary' : 'default'}
+                color={props.issues.blocker > 0 ? 'primary' : 'default'}
                 avatar={
                   <Avatar className={props.classes.chip}>
                     {props.issues.blocker}
