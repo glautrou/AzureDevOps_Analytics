@@ -54,9 +54,9 @@ const AppRouter = () => (
             <li>
               <Link to="/analytic/">Analytic</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/about/">About</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
         <Switch>
