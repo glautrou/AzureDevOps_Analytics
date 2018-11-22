@@ -8,6 +8,7 @@
     "array-sort": "^1.0.0",
     "flow-bin": "^0.86.0",
     "moment": "^2.22.2",
+    "query-string": "^6.2.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-moment": "^0.8.3",
