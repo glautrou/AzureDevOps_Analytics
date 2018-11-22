@@ -1,0 +1,8 @@
+{
+  "name": "Azure DevOps Analytics",
+  "script": "./bin/www",
+  "watch": true,
+  "env_production": {
+    "NODE_ENV": "production"
+  }
+}

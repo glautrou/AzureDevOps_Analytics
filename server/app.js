@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var config = require('./config');
 
 var indexRouter = require('./routes/index');
 var applicationsRouter = require('./routes/applications');
@@ -56,5 +57,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+console.log('Environment: ' + config.get('env'));
 
 module.exports = app;
