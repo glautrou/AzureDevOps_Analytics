@@ -4,6 +4,8 @@ It allows you to get a wide insight about state/quality of your projects.
 
 By default, analytics are refresed every ten minutes.
 
+# How does it work ?
+
 # Run the project locally
 Client (http://localhost:3000):
 - `cd client`
@@ -16,6 +18,7 @@ Server (http://localhost:3001):
 # Configuration
 The configuration of the application is located at: /server/config
 You need to duplicate the production.config.json to development.config.json and edit the configuration. The description is located at /server/config/index.js
+For continuous delivery scenarios, you can automate variables replacement in your pipeline.
 
 # Installation
 It is up to you. For example you could host your client as a static website in the cloud (e.g. Amazon S3) or group both client and server on an on-premise server.
@@ -44,9 +47,13 @@ Check:
 - Display server logs: `pm2 show [YOUR_APP_ID] logs`
 - Website in working: http://localhost:3001
 
+# Network communication
+On your hosting server, make sure you can access to your Azure DevOps server and SonarQube server. Those HTTP URLs are located into your server configuration file : /server/config/production.config.json
+
 # Limitations
 - At the moment there is no authentication implemented, so make sure your URL is not publicly available.
 - To list a project you need to create it in Azure DevOps
+- The SonarQube key must match your Azure DevOps project name
 
 # TODO list
 - Add refresh time to settings
